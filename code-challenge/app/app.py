@@ -92,14 +92,13 @@ class Powers(Resource):
                 "name": power.name,
                 "description": power.description,
                 "created_at":power.created_at,
-                "hero_ps": [
-                    {
-                        "strength": hero_p.strength,
-                        "hero_id": hero_p.hero_id
-                    }
-                    for hero_p in power.hero_ps
-                ]
-
+                # "hero_ps": [
+                #     {
+                #         "strength": hero_p.strength,
+                #         "hero_id": hero_p.hero_id
+                #     }
+                #     for hero_p in power.heroes
+                # ]
             }
             powers.append(power_data)
         return make_response(jsonify(powers),200) 
@@ -120,13 +119,13 @@ class PowersById(Resource):
                 "name": power.name,
                 "description": power.description,
                 "created_at": power.created_at,
-                "hero_ps": [
-                    {
-                        "strength": hero_p.strength,
-                        "hero_id": hero_p.hero_id
-                    }
-                    for hero_p in power.hero_ps
-                ]
+                # "hero_ps": [
+                #     {
+                #         "strength": hero_power.strength,
+                #         "hero_id": hero_power.hero_id
+                #     }
+                #     for hero_power in power.heroes
+                # ]
             }
             powers.append(power_data)
             return make_response(jsonify(powers), 200)
@@ -147,16 +146,15 @@ class PowersById(Resource):
 
         if power:
             description = request.form.get('description')
-
-            if not description or len(description) < 20:
+            if description and len(description) < 20:
                 response_dict = {
-                   "errors": ["validation errors"]
+                    "errors": ["validation errors"]
                 }
                 response = make_response(jsonify(response_dict), 400)
                 return response
             for attr in request.form:
                 setattr(power, attr, request.form.get(attr))
-            db.session.add(power)
+            # db.session.add(power)
             db.session.commit()
    
             power_data = {

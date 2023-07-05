@@ -25,6 +25,7 @@ class Hero(db.Model):
         secondary=hero_power, 
         back_populates='heroes'
     )
+    
 
 class Power(db.Model):
     __tablename__ = 'powers'
@@ -40,6 +41,7 @@ class Power(db.Model):
         secondary=hero_power, 
         back_populates='powers'
     )
+    
    
 
 # class Hero_p(db.Model):
